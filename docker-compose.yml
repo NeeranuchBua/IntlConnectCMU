@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  cmu-warning-system:
+    container_name: cmu-warning-system-dev
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000" # Map the Next.js default port
+      - "5555:5555"
+    command: ["bun", "run", "dev:all"] # Run the development environment
+    env_file:
+      - ./.env.development
+    environment:
+      NODE_ENV: development
+    stdin_open: true
+    tty: true
+  postgres:
+    image: postgres:15.3
+    container_name: cmu-warning-system-dev-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Add volume for PostgreSQL
+
+volumes:
+  node_modules: # Keep `node_modules` volume isolated
+  postgres_data:
