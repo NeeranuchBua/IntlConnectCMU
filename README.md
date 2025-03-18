@@ -38,7 +38,6 @@ Before running the project, ensure you have the following installed:
    Replace `username`, `password`, and `database` with your actual PostgreSQL credentials.
    AQI Token
    WEATHER Token
-   ```
 
 ## Development Setup
 
